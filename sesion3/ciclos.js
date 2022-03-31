@@ -84,7 +84,7 @@ while(n <3){
     console.log(m);
     n++
 }
-*/
+*//*
 console.log("hola");
 //do while
 let i=0, resultado = 0;
@@ -94,3 +94,31 @@ do{
 }while (i <5);
 
 console.log(resultado);
+
+
+//paint respuesta de un solo objeto 
+
+{{
+    lote:5,
+    estado:"Recepción",
+    fecha: "2022-03-30"
+},
+}
+let estudiante= estudiantes.find(c => c.nombre === 'Leon');
+console.log(estudiante);*/
+
+//recomienda indexOf   busca algo concreto
+
+let facturaEstado =7;
+const ESTADOS =[1, 2, 3, 4 ,5 ,8];
+let existeESTADO = ESTADOS.indexOf(facturaEstado);
+console.log(existeESTADO);
+
+for(const valorEstado of ESTADOS){
+if(valorEstado === facturaEstado){
+sw =true;
+break;
+}}
+ console.log(sw);
+
+
