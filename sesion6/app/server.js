@@ -9,12 +9,12 @@ grupo 5columnas
 INNER JOIN
 materia 30 columnas
 1*/
-const express = require ('express');
+/*const express = require ('express');
 const cors = require('cors');
 const app =express();
 
 let corsOptins=
-   /* {origin:"http://localhost:8081",}*/
+   /* {origin:"http://localhost:8081",}
    ["http://localhost:8081", "http://localhost:8082"]
 app.use(
 
@@ -54,6 +54,7 @@ app.get("/",(req,res)=> {
 });
 
 app.post("/insertar",(req,res)=> { 
+  const {id, token} =req.body;
   res.json({mensaje:"Bienvenidos a mi primera api con express"});
  });
  
@@ -62,8 +63,71 @@ const PORT =8081;
 /*app.listen(PORT,( )=>{
     console.log(`server corriendo por el puerto: ${PORT}`);
 });
-*/
+
 const server =app.listen(PORT, function(){
 let host = server.address().address;
 console.log("SERVIDOR BACKEND EN http://%s:%s",host, PORT);
 });
+*/
+
+const express = require("express");
+const cors = require('cors');
+const db = require("./models");
+const app = express();
+//db.sequelize.sync();
+//const db =require ("./models");
+
+
+let corsOptions = ["http://localhost" ,"http://localhost:8082"];
+// app.use(
+//   cors({
+//     origin: (origin, callback) => {
+//       if (!origin) return callback(null, true);
+//       if (corsOptions.indexOf(origin) === -1) {
+//         return callback(
+//           new Error(`La politica de CORS para esta url no permite el acceso`),
+//           false
+//         );
+//       }
+//       return callback(null, true);
+//     },
+//     credentials: true,
+//   })
+// );
+
+app.use(express.json()); 
+app.use(express.urlencoded({ extends: true }));
+
+app.get("/", (req, res) => {
+  const {id,token} = req.query;
+  console.log(token);
+  console.log(id);
+  res.json({ mensaje: "Bienvenidos a mi primera api con express get" });
+});
+
+app.post("/", (req, res) => {
+  // const {id,token} = req.query;
+  console.log('----------------------------------------------');
+  const {id,token} = req.body;
+  console.log(req.query);
+  console.log(req.body);
+  // console.log(token);
+  // console.log(id);
+  console.log('----------------------------------------------');
+  res.json({ mensaje: "Bienvenidos a mi primera api con express post" });
+});
+
+require("./routes/estudiantesdaya.routes")(app);
+
+const PORT = 8081;
+db.sequelize.sync({force : false}).then(() =>{
+  console.log("eliminar db");
+});
+
+/*const server = app.listen(PORT, function () {
+  let host = server.address().address;
+  console.log("SERVIDOR BACKEND EN http://%s:%s", host, PORT);
+});*/
+const server = app.listen(PORT,() => {
+  console.log(`server corriendo por puerto : ${PORT}`);
+})
